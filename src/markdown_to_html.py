@@ -1,5 +1,5 @@
 from markdown_blocks import markdown_to_blocks, block_to_block_type
-from htmlnode import HTMLNode, ParentNode, LeafNode
+from htmlnode import ParentNode
 from inline_markdown import text_to_textnodes
 from textnode import text_node_to_html_node
 import re
@@ -22,7 +22,7 @@ def markdown_to_html_node(markdown):
             sanitized_list = e.split("\n")
             for element in sanitized_list:
                 if element.strip():  # Skip empty lines
-                    sanitized_element = re.sub(r"^\- |^\d+\. ", "", element)
+                    sanitized_element = re.sub(r"^\- |^\* |^\d+\. ", "", element)
                     text_nodes = text_to_textnodes(sanitized_element)
                     html_nodes = [text_node_to_html_node(node) for node in text_nodes]
                     list_items.append(ParentNode("li", html_nodes))
